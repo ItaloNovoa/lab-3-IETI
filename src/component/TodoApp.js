@@ -6,7 +6,8 @@ import TextField from '@material-ui/core/TextField';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import MenuItem from '@material-ui/core/MenuItem';
-import { Container, Button, lightColors, darkColors } from 'react-floating-action-button'
+import { Container, Button, lightColors, darkColors,Link } from 'react-floating-action-button'
+import AddIcon from '@material-ui/icons/Add';
 
 class TodoApp extends React.Component {
 
@@ -81,9 +82,11 @@ class TodoApp extends React.Component {
             selected={this.state.dueDate}
             onChange={this.handleDate} />
           <Container>
-                    <Button                        
+                    <Button
+                        label="status"            
                         tooltip="add Card"
-                        styles={{ backgroundColor: darkColors.lighterRed, color: lightColors.lighterRed}}
+                        styles={{backgroundColor: darkColors.green, color: darkColors.orange}}                       
+                        iconStyles={{AddIcon}}
                         onClick={this.state.items.length + 1}
                     />
                 </Container>

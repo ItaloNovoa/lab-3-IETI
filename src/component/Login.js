@@ -15,7 +15,7 @@ export class Login extends React.Component{
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value
 
-        if (email != "" && password != "") {
+        if (email !== "" && password !== "") {
             localStorage.setItem("isLoggedin", true);
             localStorage.setItem("mailLogged", email);
             localStorage.setItem("passwordLogged", password);
@@ -58,7 +58,7 @@ export class Login extends React.Component{
                         <h1>TaskPlanner</h1>
                             <img src={image1}/>
                         
-                        <Typography variant="headline">Sign in</Typography>
+                        <Typography variant="headline">Login</Typography>
                         <form className="form">
                             <FormControl margin="normal" fullWidth>
                                 <InputLabel htmlFor="email">Email Address</InputLabel>
