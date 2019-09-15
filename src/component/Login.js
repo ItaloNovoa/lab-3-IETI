@@ -30,8 +30,15 @@ export class Login extends React.Component{
         this.handleCreateAcount = this.handleCreateAcount.bind(this);
     }
     handleLoggin(event) {
-        this.checkdata();
-        this.setState({ Loggin: true });
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value
+        if (email !=="" && password!==""){
+            this.checkdata();
+            this.setState({ Loggin: true });
+        }else{
+            alert("El campo de email o contraseña esta vacio");
+        }
+        
     }
     handleCreateAcount(event) {
         this.setState({ createAcount: true });

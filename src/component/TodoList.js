@@ -2,11 +2,6 @@ import React from 'react';
 import {TodoApp2} from './TodoApp2'
 
 export class TodoList extends React.Component {
-
-    constructor(props) {
-        super(props);
-    } 
-    
   
     render() {        
 

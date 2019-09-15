@@ -1,20 +1,22 @@
 import React from 'react';
 import { TodoList } from './TodoList'
 import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import MenuItem from '@material-ui/core/MenuItem';
-import { Container, Button, lightColors, darkColors,Link } from 'react-floating-action-button'
+import { Container, Button, darkColors } from 'react-floating-action-button'
 import AddIcon from '@material-ui/icons/Add';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 class TodoApp extends React.Component {
 
 
   constructor(props) {
     super(props);
-    this.state = { items: [], description: '', name: '', email: '', status: '', dueDate: '' };
+    this.state = { items: [], description: '', name: '', email: '', status: '', dueDate:  new Date('2014-08-18T21:11:54') };
     this.handleChange = this.handleChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,20 +24,6 @@ class TodoApp extends React.Component {
   }
 
   render() {
-    const statusList = [
-      {
-        value: 'Ready',
-        label: 'Ready',
-      },
-      {
-        value: 'InProgress',
-        label: 'In Progress',
-      },
-      {
-        value: 'OnHold',
-        label: 'On hold',
-      },
-    ];
 
     return (
       <Card >
@@ -74,22 +62,32 @@ class TodoApp extends React.Component {
             id="status"
             value={this.state.status}
             onChange={this.handleChange}
-            margin="normal"            
+            margin="normal"
           />
-          <DatePicker
-            type="date"
-            id="date"
-            selected={this.state.dueDate}
-            onChange={this.handleDate} />
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+
+            <KeyboardDatePicker
+              margin="normal"
+              id="date"
+              label="Date"
+              format="MM/dd/yyyy"
+              value={this.state.dueDate}
+              selected={this.state.dueDate}
+              onChange={this.handleDate}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
+            />
+          </MuiPickersUtilsProvider>
           <Container>
-                    <Button
-                        label="status"            
-                        tooltip="add Card"
-                        styles={{backgroundColor: darkColors.green, color: darkColors.orange}}                       
-                        iconStyles={{AddIcon}}
-                        onClick={this.state.items.length + 1}
-                    />
-                </Container>
+            <Button
+              label="status"
+              tooltip="add Card"
+              styles={{ backgroundColor: darkColors.green, color: darkColors.orange }}
+              iconStyles={{ AddIcon }}
+              onClick={this.state.items.length + 1}
+            />
+          </Container>
         </form>
       </Card >
     );
@@ -99,7 +97,7 @@ class TodoApp extends React.Component {
     this.setState({ description: document.getElementById('description').value })
     this.setState({ name: document.getElementById('name').value });;
     this.setState({ email: document.getElementById('mail').value });;
-    this.setState({ status: document.getElementById('status').value });   
+    this.setState({ status: document.getElementById('status').value });
   }
 
   handleDate(e) {
