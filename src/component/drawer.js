@@ -20,6 +20,7 @@ import image1 from "./imagenes/1.png"
 import Card from '@material-ui/core/Card';
 import AddIcon from '@material-ui/icons/Add';
 import { Container, Button, lightColors, darkColors } from 'react-floating-action-button'
+import TodoApp from './TodoApp';
 
 const drawerWidth = 200;
 
@@ -171,6 +172,7 @@ export default function MiniDrawer() {
 
             <main className={classes.content}>
                 <div className={classes.toolbar} />
+                {/**
                 <Card >
                     <Typography color="textSecondary" gutterBottom>
                         description= descripcion fija 1
@@ -217,14 +219,10 @@ export default function MiniDrawer() {
                         DueDate= "156464645646"
                     </Typography>
                 </Card>
-                <Container>
-                    <Button
-                        
-                        tooltip="add Card"
-                        styles={{ backgroundColor: darkColors.lighterRed, color: lightColors.lighterRed}}
-                        onClick={handleCreate}
-                    />
-                </Container>
+                */}
+                
+                <TodoApp></TodoApp>
+                
             </main>
         </div>
     );

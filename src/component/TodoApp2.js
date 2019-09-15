@@ -16,10 +16,16 @@ export class TodoApp2 extends React.Component {
         return (            
             <Card >
                 <Typography color="textSecondary" gutterBottom>
-                    Text= {this.props.res.text} 
+                    Descripcion= {this.props.res.description} 
                 </Typography>
                 <Typography color="textSecondary" gutterBottom>
-                    Priority= {this.props.res.priority} 
+                    Nombre= {this.props.res.name} 
+                </Typography>
+                <Typography color="textSecondary" gutterBottom>
+                    email= {this.props.res.email} 
+                </Typography>
+                <Typography color="textSecondary" gutterBottom>
+                    estado= {this.props.res.status} 
                 </Typography>
                 <Typography color="textSecondary" gutterBottom>
                     DueDate= {this.props.res.dueDate.toString()}

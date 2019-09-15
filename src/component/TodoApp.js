@@ -1,92 +1,119 @@
 import React from 'react';
 import { TodoList } from './TodoList'
-import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Input from '@material-ui/core/Input';
 import TextField from '@material-ui/core/TextField';
-import  DatePicker  from 'react-datepicker';
+import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-
+import MenuItem from '@material-ui/core/MenuItem';
+import { Container, Button, lightColors, darkColors } from 'react-floating-action-button'
 
 class TodoApp extends React.Component {
 
 
   constructor(props) {
     super(props);
-    this.state = { items: [], text: '', priority: '', dueDate: '' };
+    this.state = { items: [], description: '', name: '', email: '', status: '', dueDate: '' };
     this.handleChange = this.handleChange.bind(this);
-    this.handleDate  = this.handleDate.bind(this);
+    this.handleDate = this.handleDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
   }
 
   render() {
-    
+    const statusList = [
+      {
+        value: 'Ready',
+        label: 'Ready',
+      },
+      {
+        value: 'InProgress',
+        label: 'In Progress',
+      },
+      {
+        value: 'OnHold',
+        label: 'On hold',
+      },
+    ];
 
     return (
       <Card >
-        <Typography component="h2">
-          TODO
-          </Typography>
         <TodoList items={this.state.items} />
         <form onSubmit={this.handleSubmit}>
           <label htmlFor="new-todo">
-            What needs to be done?
+            Ingresa los datos
           </label>
-
           <TextField
             type="text"
-            label="text"
-            id="text"
-            value={this.state.text}
+            label="Descripcion"
+            id="description"
+            value={this.state.description}
             onChange={this.handleChange}
             margin="normal"
           />
           <TextField
-            type="number"
-            id="number"
-            label="Number"
+            type="text"
+            label="name"
+            id="name"
+            value={this.state.name}
             onChange={this.handleChange}
-            value={this.state.priority}
             margin="normal"
           />
-          
+          <TextField
+            type="text"
+            label="mail"
+            id="mail"
+            value={this.state.email}
+            onChange={this.handleChange}
+            margin="normal"
+          />
+          <TextField
+            type="text"
+            label="status"
+            id="status"
+            value={this.state.status}
+            onChange={this.handleChange}
+            margin="normal"            
+          />
           <DatePicker
             type="date"
             id="date"
             selected={this.state.dueDate}
-            onChange={this.handleDate}/> 
-
-          <Button variant="contained" type="submit">
-            Add #{this.state.items.length + 1}
-          </Button>
+            onChange={this.handleDate} />
+          <Container>
+                    <Button                        
+                        tooltip="add Card"
+                        styles={{ backgroundColor: darkColors.lighterRed, color: lightColors.lighterRed}}
+                        onClick={this.state.items.length + 1}
+                    />
+                </Container>
         </form>
       </Card >
     );
   }
 
   handleChange(e) {
-    this.setState({ text: document.getElementById('text').value })
-    this.setState({ priority: document.getElementById('number').value });;
+    this.setState({ description: document.getElementById('description').value })
+    this.setState({ name: document.getElementById('name').value });;
+    this.setState({ email: document.getElementById('mail').value });;
+    this.setState({ status: document.getElementById('status').value });   
   }
 
-  handleDate(e){
-    this.setState({dueDate: e});
+  handleDate(e) {
+    this.setState({ dueDate: e });
   }
 
 
   handleSubmit(e) {
     e.preventDefault();
-    if (!this.state.text.length) {
+    if (!this.state.description.length) {
       return;
     }
     const newItem = {
-      text: this.state.text,
-      priority: this.state.priority,
+      description: this.state.description,
+      name: this.state.name,
+      email: this.state.email,
+      status: this.state.status,
       dueDate: this.state.dueDate,
       id: Date.now()
 
