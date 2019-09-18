@@ -10,8 +10,10 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import Typography from '@material-ui/core/Typography';
 
 class TodoApp extends React.Component {
+
 
 
   constructor(props) {
@@ -22,13 +24,18 @@ class TodoApp extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
 
   }
+ 
 
   render() {
-
+    
     return (
       <div>
-        <TodoList items={this.state.items} />
-        <Card >        
+        <h2>Lista de tarjetas</h2> 
+            
+        <TodoList items={this.state.items} />        
+        
+        <Card > 
+        <h2>Datos para nueva tarjeta</h2>      
         <form onSubmit={this.handleSubmit}>
           <TextField
             type="text"
@@ -93,6 +100,7 @@ class TodoApp extends React.Component {
       
     );
   }
+ 
 
   handleChange(e) {
     this.setState({ description: document.getElementById('description').value })

@@ -1,9 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 export class TodoApp2 extends React.Component {
@@ -25,10 +21,10 @@ export class TodoApp2 extends React.Component {
                         Nombre= {this.props.res.name}
                     </Typography>
                     <Typography color="textSecondary" gutterBottom>
-                        email= {this.props.res.email}
+                        Email= {this.props.res.email}
                     </Typography>
                     <Typography color="textSecondary" gutterBottom>
-                        estado= {this.props.res.status}
+                        Estado= {this.props.res.status}
                     </Typography>
                     <Typography color="textSecondary" gutterBottom>
                         DueDate= {this.props.res.dueDate.toString()}
