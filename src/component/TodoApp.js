@@ -26,12 +26,10 @@ class TodoApp extends React.Component {
   render() {
 
     return (
-      <Card >
+      <div>
         <TodoList items={this.state.items} />
+        <Card >        
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="new-todo">
-            Ingresa los datos
-          </label>
           <TextField
             type="text"
             label="Descripcion"
@@ -90,6 +88,9 @@ class TodoApp extends React.Component {
           </Container>
         </form>
       </Card >
+      </div>
+
+      
     );
   }
 

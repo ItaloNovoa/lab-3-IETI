@@ -171,58 +171,8 @@ export default function MiniDrawer() {
 
 
             <main className={classes.content}>
-                <div className={classes.toolbar} />
-                {/**
-                <Card >
-                    <Typography color="textSecondary" gutterBottom>
-                        description= descripcion fija 1
-                    </Typography>
-                    <p></p>
-                    <Divider />
-                    <Typography color="textSecondary" gutterBottom>
-                        nombre= 2
-                        <p></p>
-                        correo electrónico = a_b@correodepeurba.co
-                    </Typography>
-                    <p></p>
-                    <Divider />
-                    <Typography color="textSecondary" gutterBottom>
-                        Status= "listo"
-                    </Typography>
-                    <p></p>
-                    <Divider />
-                    <Typography color="textSecondary" gutterBottom>
-                        DueDate= "156464645646"
-                    </Typography>
-                </Card>
-                <p></p>
-                <p></p>
-                <Card >
-                    <Typography color="textSecondary" gutterBottom>
-                        description= algún texto descriptivo
-                    </Typography>
-                    <p></p>
-                    <Divider />
-                    <Typography color="textSecondary" gutterBottom>
-                        nombre= Santiago Carrillo
-                        <p></p>
-                        correo electrónico = sancarbar @ gmail
-                    </Typography>
-                    <p></p>
-                    <Divider />
-                    <Typography color="textSecondary" gutterBottom>
-                        Status= "listo"
-                    </Typography>
-                    <p></p>
-                    <Divider />
-                    <Typography color="textSecondary" gutterBottom>
-                        DueDate= "156464645646"
-                    </Typography>
-                </Card>
-                */}
-                
-                <TodoApp></TodoApp>
-                
+                <div className={classes.toolbar} />                
+                <TodoApp></TodoApp>               
             </main>
         </div>
     );
