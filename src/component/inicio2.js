@@ -18,6 +18,15 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import image1 from "./imagenes/1.png"
 import TodoApp from './TodoApp';
+import Box from '@material-ui/core/Box';
+import { Container, Button as Button1 , darkColors } from 'react-floating-action-button'
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import Button from '@material-ui/core/Button';
+import { TodoList } from './TodoList'
+import { tsConstructorType } from '@babel/types';
 
 const drawerWidth = 0;
 
@@ -82,15 +91,18 @@ const useStyles = makeStyles(theme => ({
     },
 
 }));
+
 function logOut() {
     localStorage.removeItem("isLoggedin");
     window.location.replace("/");
 
 }
+
 export default function PersistentDrawerLeft() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const theme = useTheme();
+    
 
     const [state, setState] = React.useState({
         left: false,
@@ -103,6 +115,8 @@ export default function PersistentDrawerLeft() {
         setOpen(open)
         setState({ ...state, [side]: open });
     };
+
+    
 
     const sideList = side => (
         <div
@@ -117,9 +131,13 @@ export default function PersistentDrawerLeft() {
             <Divider />
             <Divider />
             <div>
-                <img src={image1}  width='50%' height='auto'/>
-                
-                <ListItemText primary={localStorage.getItem('mailLogged')} />
+                <Box display="flex" justifyContent="center" m={1} p={1}>
+                    <img src={image1} width='50%' height='auto' />
+                </Box>
+                <Box display="flex" justifyContent="center" m={1} p={1}>
+                    <ListItemText primary={localStorage.getItem('mailLogged')} />
+                </Box>
+
             </div>
             <Divider />
             <List>
@@ -133,7 +151,8 @@ export default function PersistentDrawerLeft() {
         </div>
     );
 
-
+    const TodoApp1=<TodoApp/>
+    const TodoList=null;
 
     return (
         <div className={classes.root}>
@@ -163,15 +182,15 @@ export default function PersistentDrawerLeft() {
                         {sideList('left')}
                     </SwipeableDrawer>
                     <divider />
-                    <Typography variant="h6" noWrap>
-                        Persistent drawer
+                    <Typography variant="h6" display="flex" justifyContent="center" noWrap>
+                        Task Planner
                     </Typography>
                 </Toolbar>
             </AppBar>
 
             <main className={classes.content}>
-                <div className={classes.toolbar} />                
-                <TodoApp></TodoApp>               
+                <div className={classes.toolbar} />
+                <TodoApp></TodoApp>
             </main>
         </div>
     );

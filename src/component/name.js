@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 
 export class Name extends Component {
+    
     checkdata() {
         const email = document.getElementById("name").value;
         const password = document.getElementById("password").value
@@ -89,6 +90,9 @@ export class Name extends Component {
             justifyContent: 'space-between'
         };
         const useStyles = makeStyles(theme => ({
+            root: {
+                background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+              },
             fab: {
                 position: 'absolute',
                 bottom: theme.spacing(2),
@@ -115,9 +119,9 @@ export class Name extends Component {
         };
 
         return (
-            <div className="color_fondo">
+            <div >
                 <h1>Informacion de registro</h1>
-                <div >
+                <div className='root'>
                     <form style={divStyle} >
                         <TextField
                             type="text"

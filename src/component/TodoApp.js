@@ -11,6 +11,7 @@ import {
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import Typography from '@material-ui/core/Typography';
+import { fontSize } from '@material-ui/system';
 
 class TodoApp extends React.Component {
 
@@ -88,10 +89,9 @@ class TodoApp extends React.Component {
             <Button
               label="status"
               tooltip="add Card"
-              styles={{ backgroundColor: darkColors.green, color: darkColors.orange }}
+              styles={{ backgroundColor: darkColors.blue, color: darkColors.white }}
               iconStyles={{ AddIcon }}
-              onClick={this.state.items.length + 1}
-            />
+              onClick={this.state.items.length + 1}><font size="8">+</font></Button>
           </Container>
         </form>
       </Card >
