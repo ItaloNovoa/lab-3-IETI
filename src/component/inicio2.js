@@ -23,7 +23,7 @@ const drawerWidth = 0;
 
 const useStyles = makeStyles(theme => ({
     list: {
-        width: 250,
+        width: 200,
     },
     root: {
         display: 'flex',
@@ -62,14 +62,16 @@ const useStyles = makeStyles(theme => ({
         ...theme.mixins.toolbar,
         justifyContent: 'flex-end',
     },
+    toolbar: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: theme.spacing(0, 1),
+        ...theme.mixins.toolbar,
+    },
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        marginLeft: -drawerWidth,
     },
     contentShift: {
         transition: theme.transitions.create('margin', {
@@ -115,7 +117,8 @@ export default function PersistentDrawerLeft() {
             <Divider />
             <Divider />
             <div>
-                <img src={image1} height="180" width="180" />
+                <img src={image1}  width='50%' height='auto'/>
+                
                 <ListItemText primary={localStorage.getItem('mailLogged')} />
             </div>
             <Divider />
@@ -166,13 +169,9 @@ export default function PersistentDrawerLeft() {
                 </Toolbar>
             </AppBar>
 
-            <main
-                className={clsx(classes.content, {
-                    [classes.contentShift]: open,
-                })}
-            >
-                <div className={classes.drawerHeader} />
-                <TodoApp></TodoApp>
+            <main className={classes.content}>
+                <div className={classes.toolbar} />                
+                <TodoApp></TodoApp>               
             </main>
         </div>
     );
