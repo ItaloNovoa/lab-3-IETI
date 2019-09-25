@@ -26,11 +26,14 @@ class TodoApp extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSearch= this.handleSearch.bind(this);
 
   }
-  handleBack(event){
-    alert("SUuuuuuu")
-}
+  handleSearch(event){
+    console.log(this.state.items);
+    this.state.items.map((item) => alert(item.description));
+    
+  }
 
   render() {
     const useStyles = makeStyles(theme => ({
@@ -105,7 +108,7 @@ class TodoApp extends React.Component {
             />
           </MuiPickersUtilsProvider>
           <Container>
-          <Fab tooltip="Fitrar Notas" color="primary" aria-label="add" onClick={this.handleBack} className={useStyles.fab1}>
+          <Fab tooltip="Fitrar Notas" color="primary" aria-label="add" onClick={this.handleSearch} className={useStyles.fab1}>
                             <SearchIcon />
               </Fab> 
             <Button
@@ -113,13 +116,6 @@ class TodoApp extends React.Component {
               tooltip="add Card"
               styles={{ backgroundColor: darkColors.blue, color: darkColors.white }}
               onClick={this.state.items.length + 1}><font size="8">+</font></Button>
-              
-              {/**
-               <Fab tooltip="add Card" color="primary" aria-label="add" onClick={this.state.items.length + 1} className={useStyles.fab1}>
-                            <AddIcon />
-              </Fab> 
-              
-               */}
               
           </Container>
         </form>
