@@ -27,6 +27,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import Button from '@material-ui/core/Button';
 import { TodoList } from './TodoList'
 import { tsConstructorType } from '@babel/types';
+import EditIcon from '@material-ui/icons/Edit';
 
 const drawerWidth = 0;
 
@@ -95,7 +96,9 @@ const useStyles = makeStyles(theme => ({
 function logOut() {
     localStorage.removeItem("isLoggedin");
     window.location.replace("/");
-
+}
+function edit() {    
+    window.location.replace("/edit");
 }
 
 export default function PersistentDrawerLeft() {
@@ -134,9 +137,15 @@ export default function PersistentDrawerLeft() {
                 <Box display="flex" justifyContent="center" m={1} p={1}>
                     <img src={image1} width='50%' height='auto' />
                 </Box>
-                <Box display="flex" justifyContent="center" m={1} p={1}>
-                    <ListItemText primary={localStorage.getItem('mailLogged')} />
+                <Box display="flex" justifyContent="center" >
+                    <ListItemText primary={localStorage.getItem('nameLogged')} />
+                    <IconButton display="flex" justifyContent="flex-end" onClick={edit}>
+                        {<EditIcon />}
+                    </IconButton>
                 </Box>
+                
+                   
+                
 
             </div>
             <Divider />

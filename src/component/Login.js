@@ -15,7 +15,7 @@ export class Login extends React.Component{
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value
 
-        if (email !== "" && password !== "") {
+        if (email !== "" && password !== "" ) {
             localStorage.setItem("isLoggedin", true);
             localStorage.setItem("mailLogged", email);
             localStorage.setItem("passwordLogged", password);
@@ -32,18 +32,26 @@ export class Login extends React.Component{
     handleLoggin(event) {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value
-        if (email !=="" && password!==""){
+        if (email !=="" && password!=="" && localStorage.getItem("mailLogged")==email && localStorage.getItem("passwordLogged")==password){
             this.checkdata();
             this.setState({ Loggin: true });
-        }else{
+        }else if(email =="" && password==""){
             alert("El campo de email o contraseña esta vacio");
+        }else{
+            alert("usuario o correo incorrecto")
         }
         
     }
     handleCreateAcount(event) {
         this.setState({ createAcount: true });
     }
+    log() {        
+        if(localStorage.isLoggedin==="true"){            
+            window.location.replace("/miniDrawer");
+        }        
+    }
     render(){
+        this.log()
         if (this.state.createAcount) {
             return <Redirect to={{
                 pathname: '/name'

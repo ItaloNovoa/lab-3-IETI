@@ -15,7 +15,7 @@ import { Container } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 
 
-export class Name extends Component {
+export class edit extends Component {
     
     checkdata() {
         const email = document.getElementById("email").value;
@@ -117,14 +117,14 @@ export class Name extends Component {
         };
         if (this.state.back) {
             return <Redirect to={{
-                pathname: '/',
+                pathname: '/miniDrawer',
             }}
             />
         };
 
         return (
             <div >
-                <h1  align="center">Informacion de registro</h1>
+                <h1  align="center">Editar informacion de Registro</h1>
                <Container>
                <div className='divStyle1'>
                     <form style={divStyle} >
@@ -134,7 +134,7 @@ export class Name extends Component {
                         </Container>
                         <TextField
                             type="text"
-                            label="FIRST NAME"
+                            label="New FIRST NAME"
                             id="name"
                             value={this.state.first_name}
                             onChange={this.handleFirstName}
@@ -142,7 +142,7 @@ export class Name extends Component {
                         />
                         <TextField
                             type="text"
-                            label="LAST NAME"
+                            label="New LAST NAME"
                             id="last_name"
                             value={this.state.last_name}
                             onChange={this.handleLastName}
@@ -150,30 +150,15 @@ export class Name extends Component {
                         />
                         <TextField
                             type="email"
-                            label="EMAIL ADDRESS"
+                            label="New EMAIL ADDRESS"
                             id="email"
                             value={this.state.email}
                             onChange={this.handleEmail}
                             margin="normal"
-                        />
-                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-
-                            <KeyboardDatePicker
-                                margin="normal"
-                                id="birthday"
-                                label="Bird date"
-                                format="MM/dd/yyyy"
-                                value={this.state.birthday}
-                                selected={this.state.birthday}
-                                onChange={this.handleBirthday}
-                                KeyboardButtonProps={{
-                                    'aria-label': 'change date',
-                                }}
-                            />
-                        </MuiPickersUtilsProvider>
+                        />                        
                         <TextField
                             type="password"
-                            label="Password"
+                            label="New Password"
                             id="password"
                             value={this.state.password}
                             onChange={this.handlePassword}
@@ -181,7 +166,7 @@ export class Name extends Component {
                         />
                         <TextField
                             type="password"
-                            label="REPEAT PASSWORD"
+                            label="REPEAT New PASSWORD"
                             id="secondPassword"
                             value={this.state.secondPassword}
                             onChange={this.handleSecondPassword}
@@ -191,10 +176,10 @@ export class Name extends Component {
                 </div>
                 <div >
                     <Box display="flex" justifyContent="center" m={1} p={1}>
-                    <Fab color="primary" aria-label="add" onClick={this.handleBack} className={useStyles.fab}>
+                        <Fab tooltip="Cancelar" color="primary" aria-label="add" onClick={this.handleBack} className={useStyles.fab}>
                             <LeftIcon />
                         </Fab>  
-                        <Fab color="primary" aria-label="add" onClick={this.handleNext} className={useStyles.fab1}>
+                        <Fab tooltip="Confirmar" color="primary" aria-label="add" onClick={this.handleNext} className={useStyles.fab1}>
                             <RightIcon />
                         </Fab>    
                     </Box>

@@ -12,6 +12,9 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 import Typography from '@material-ui/core/Typography';
 import { fontSize } from '@material-ui/system';
+import SearchIcon from '@material-ui/icons/Search';
+import Fab from '@material-ui/core/Fab';
+import { makeStyles } from '@material-ui/core/styles';
 
 class TodoApp extends React.Component {
 
@@ -25,10 +28,26 @@ class TodoApp extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
 
   }
- 
+  handleBack(event){
+    alert("SUuuuuuu")
+}
 
   render() {
-    
+    const useStyles = makeStyles(theme => ({
+      root: {
+          background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+        },
+      fab: {
+          position: 'absolute',
+          bottom: theme.spacing(2),
+          left: theme.spacing(-5),
+        },
+        fab1: {
+          position: 'absolute',
+          bottom: theme.spacing(2),
+          right: theme.spacing(5),
+        },
+  }));
     return (
       <div>
         <h2>Lista de tarjetas</h2> 
@@ -86,12 +105,22 @@ class TodoApp extends React.Component {
             />
           </MuiPickersUtilsProvider>
           <Container>
+          <Fab tooltip="Fitrar Notas" color="primary" aria-label="add" onClick={this.handleBack} className={useStyles.fab1}>
+                            <SearchIcon />
+              </Fab> 
             <Button
               label="status"
               tooltip="add Card"
               styles={{ backgroundColor: darkColors.blue, color: darkColors.white }}
-              iconStyles={{ AddIcon }}
               onClick={this.state.items.length + 1}><font size="8">+</font></Button>
+              
+              {/**
+               <Fab tooltip="add Card" color="primary" aria-label="add" onClick={this.state.items.length + 1} className={useStyles.fab1}>
+                            <AddIcon />
+              </Fab> 
+              
+               */}
+              
           </Container>
         </form>
       </Card >
@@ -126,7 +155,6 @@ class TodoApp extends React.Component {
       status: this.state.status,
       dueDate: this.state.dueDate,
       id: Date.now()
-
     };
 
     this.setState(prevState => ({
