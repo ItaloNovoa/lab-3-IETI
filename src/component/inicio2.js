@@ -19,14 +19,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import image1 from "./imagenes/1.png"
 import TodoApp from './TodoApp';
 import Box from '@material-ui/core/Box';
-import { Container, Button as Button1 , darkColors } from 'react-floating-action-button'
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import Button from '@material-ui/core/Button';
-import { TodoList } from './TodoList'
-import { tsConstructorType } from '@babel/types';
 import EditIcon from '@material-ui/icons/Edit';
 
 const drawerWidth = 0;

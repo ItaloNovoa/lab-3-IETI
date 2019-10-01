@@ -32,10 +32,10 @@ export class Login extends React.Component{
     handleLoggin(event) {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value
-        if (email !=="" && password!=="" && localStorage.getItem("mailLogged")==email && localStorage.getItem("passwordLogged")==password){
+        if (email !=="" && password!=="" && localStorage.getItem("mailLogged")===email && localStorage.getItem("passwordLogged")===password){
             this.checkdata();
             this.setState({ Loggin: true });
-        }else if(email =="" && password==""){
+        }else if(email ==="" && password===""){
             alert("El campo de email o contraseña esta vacio");
         }else{
             alert("usuario o correo incorrecto")
