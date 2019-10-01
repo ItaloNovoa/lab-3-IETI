@@ -26,6 +26,14 @@ class TodoApp extends React.Component {
     this.handleDate = this.handleDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSearch= this.handleSearch.bind(this);
+    
+    this.checkdata();
+  }
+
+  checkdata() {
+    alert(localStorage.getItem("list"));
+    localStorage.setItem("list", JSON.stringify(this.state.items));    
+    alert(this.state.items.length);
   }
   handleSearch(event){
     //this.state.items.map((item) => alert(item.description));
@@ -144,8 +152,8 @@ class TodoApp extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    if (!this.state.description.length) {
-      return;
+    if (this.state.description.length==0) {
+      this.checkdata();
     }
     const newItem = {
       description: this.state.description,
@@ -155,11 +163,13 @@ class TodoApp extends React.Component {
       dueDate: this.state.dueDate,
       id: Date.now()
     };
-
+    //alert(newItem.description+","+newItem.name+","+newItem.email+","+newItem.status+","+newItem.dueDate+" ");
+    alert(JSON.stringify(newItem));
     this.setState(prevState => ({
       items: prevState.items.concat(newItem),
       text: ''
     }));
+    this.checkdata();    
   }
 }
 export default TodoApp;
