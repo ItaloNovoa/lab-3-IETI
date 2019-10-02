@@ -121,7 +121,7 @@ class filtro extends React.Component {
                                     < MenuIcon />
                             </Button>
                             */}
-                            <Fab tooltip="volver al menu" color="primary" aria-label="add" onClick={this.handleSearch} className={useStyles.fab1}>
+                            <Fab tooltip="filtrar" color="primary" aria-label="add" onClick={this.handleSearch} className={useStyles.fab1}>
                               <SearchIcon />
                             </Fab>
                             <Button
@@ -169,6 +169,8 @@ class filtro extends React.Component {
                     items: prevState.items.concat(newItem),
                     text: ''
                 }));
+            }else{
+                alert("No hay cartas con estos valores");
             }
         }
     }
