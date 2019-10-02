@@ -155,8 +155,10 @@ class filtro extends React.Component {
         
     }
     handleSearch(event){
+        var a =false;
         for (var i=0; i < this.lista.length; i++) {
             if(this.igualarFechas(this.lista[i].dueDate,this.state.dueDate) && this.lista[i].name===this.state.name  && this.lista[i].status===this.state.status){
+                a=true;
                 const newItem = {
                     description: this.lista[i].description,
                     name: this.lista[i].name,
@@ -169,9 +171,10 @@ class filtro extends React.Component {
                     items: prevState.items.concat(newItem),
                     text: ''
                 }));
-            }else{
-                alert("No hay cartas con estos valores");
             }
+        }
+        if(!a){
+            alert("No hay cartas con estos valores");
         }
     }
 
