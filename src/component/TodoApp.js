@@ -12,31 +12,30 @@ import DateFnsUtils from '@date-io/date-fns';
 import SearchIcon from '@material-ui/icons/Search';
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
-import filtro from './filtro';
 import { Redirect } from "react-router-dom";
 
 class TodoApp extends React.Component {
 
-
-
   constructor(props) {
     super(props);
-    this.state = { items: [], description: '', name: '', email: '', status: '', filtrob: false,dueDate:  new Date('2014-08-18T21:11:54') };
+    this.state = { items: [], description: '', name: '', email: '', status: '', filtrob: false,dueDate:  new Date() };
     this.handleChange = this.handleChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSearch= this.handleSearch.bind(this);
+    this.lista=[];
+    if(JSON.parse(localStorage.getItem("list"))!==null){
+      this.state.items=JSON.parse(localStorage.getItem("list"));
+      this.lista=JSON.parse(localStorage.getItem("list"));
+    }
     
-    this.checkdata();
   }
 
-  checkdata() {
-    alert(localStorage.getItem("list"));
-    localStorage.setItem("list", JSON.stringify(this.state.items));    
-    alert(this.state.items.length);
+  checkdata(items) {
+    this.lista.push(items);
+    localStorage.setItem("list", JSON.stringify(this.lista));
   }
   handleSearch(event){
-    //this.state.items.map((item) => alert(item.description));
     this.setState({ filtrob: true });
   }
 
@@ -125,8 +124,9 @@ class TodoApp extends React.Component {
                 label="status"
                 tooltip="add Card"
                 styles={{ backgroundColor: darkColors.blue, color: darkColors.white }}
-                onClick={this.state.items.length + 1}><font size="8">+</font></Button>
-                
+                onClick={this.state.items.length + 1}>
+                  <font size="8">+</font>
+                </Button>                
             </Container>
           </form>
         </Card >
@@ -152,9 +152,6 @@ class TodoApp extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    if (this.state.description.length==0) {
-      this.checkdata();
-    }
     const newItem = {
       description: this.state.description,
       name: this.state.name,
@@ -162,14 +159,12 @@ class TodoApp extends React.Component {
       status: this.state.status,
       dueDate: this.state.dueDate,
       id: Date.now()
-    };
-    //alert(newItem.description+","+newItem.name+","+newItem.email+","+newItem.status+","+newItem.dueDate+" ");
-    alert(JSON.stringify(newItem));
+    };    
     this.setState(prevState => ({
       items: prevState.items.concat(newItem),
       text: ''
     }));
-    this.checkdata();    
+    this.checkdata(newItem);    
   }
 }
 export default TodoApp;
