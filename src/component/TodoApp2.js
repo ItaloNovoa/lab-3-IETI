@@ -10,24 +10,18 @@ export class TodoApp2 extends React.Component {
 
     render() {
         return (
-            <div>
+            <div >
                 <p></p>
                 <p></p>
-                <Card >
+                <Card style={{flex:1, backgroundColor:'#92a8d1'}} >
                     <Typography color="textSecondary" gutterBottom>
                         Descripcion= {this.props.res.description}
                     </Typography>
                     <Typography color="textSecondary" gutterBottom>
-                        Nombre= {this.props.res.name}
+                        Nombre= {localStorage.getItem("nameLogged")} {"                  -          ".replace(/ /g, "\u00a0")} pryority= {this.props.res.priority}
                     </Typography>
                     <Typography color="textSecondary" gutterBottom>
-                        Email= {this.props.res.email}
-                    </Typography>
-                    <Typography color="textSecondary" gutterBottom>
-                        Estado= {this.props.res.status}
-                    </Typography>
-                    <Typography color="textSecondary" gutterBottom>
-                        DueDate= {this.props.res.dueDate.toString()}
+                        Estado = {this.props.res.status}  {"           -          ".replace(/ /g, "\u00a0")}    DueDate = {this.props.res.dueDate.toString()}
                     </Typography>
                 </Card>
                 <p></p>

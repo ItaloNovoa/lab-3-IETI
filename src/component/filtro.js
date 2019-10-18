@@ -11,16 +11,18 @@ import DateFnsUtils from '@date-io/date-fns';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import LeftIcon from '@material-ui/icons/KeyboardArrowLeft';
-import MenuIcon from '@material-ui/icons/Menu';
 import { TodoList } from './TodoList'
 import { Redirect } from "react-router-dom";
 import Fab from '@material-ui/core/Fab';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import MenuItem from '@material-ui/core/MenuItem';
 
 class filtro extends React.Component {
     constructor(props) {
         super(props);
         this.state = { items: [], name: '', status: '', dueDate: new Date(), back:false };
         this.handleChange = this.handleChange.bind(this);
+        this.handleStatus = this.handleStatus.bind(this);
         this.handleDate = this.handleDate.bind(this);
         this.handleBack = this.handleBack.bind(this);        
         this.handleSearch= this.handleSearch.bind(this);
@@ -46,6 +48,20 @@ class filtro extends React.Component {
                 right: theme.spacing(5),
             },
         }));
+        const estados = [
+            {
+              value: 'In review',
+              label: 'In review',
+            },
+            {
+              value: 'In progress',
+              label: 'In progress',
+            },
+            {
+              value: 'Terminated',
+              label: 'Terminated',
+            },
+          ];
         
         if (this.state.back) {
             return <Redirect to={{
@@ -88,39 +104,24 @@ class filtro extends React.Component {
                             margin="normal"
                         />
                         <TextField
-                            required
-                            type="text"
-                            label="status"
+                            select
                             id="status"
+                            label="Status"
                             value={this.state.status}
-                            onChange={this.handleChange}
+                            onChange={this.handleStatus}
                             margin="normal"
-                        />
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start">Status</InputAdornment>,
+                            }}
+                        >
+                            {estados.map(option => (
+                                <MenuItem key={option.value} value={option.value}>
+                                    {option.label}
+                                </MenuItem>
+                            ))}
+                        </TextField>
 
                         <Container>
-                            {/**
-                            <Button
-                                label="status"
-                                tooltip="filtrar"
-                                styles={{ backgroundColor: darkColors.blue, color: darkColors.white }}
-                                onClick={this.handleSearch}>
-                                    <SearchIcon />
-                            </Button>
-                            <Button
-                                label="status"
-                                tooltip="volver al menu"
-                                styles={{ backgroundColor: darkColors.blue, color: darkColors.white }}
-                                onClick={this.handleBack}>
-                                    <LeftIcon />
-                            </Button>
-                            <Button
-                                label="status"
-                                tooltip="opciones"
-                                styles={{ backgroundColor: darkColors.blue, color: darkColors.white }}
-                                onClick={this.avoid}>
-                                    < MenuIcon />
-                            </Button>
-                            */}
                             <Fab tooltip="filtrar" color="primary" aria-label="add" onClick={this.handleSearch} className={useStyles.fab1}>
                               <SearchIcon />
                             </Fab>
@@ -142,8 +143,8 @@ class filtro extends React.Component {
     }
     handleChange(e) {
         this.setState({ name: document.getElementById('name').value });
-        this.setState({ status: document.getElementById('status').value });
     }
+
 
     handleDate(e) {
         this.setState({ dueDate: e });
@@ -151,10 +152,14 @@ class filtro extends React.Component {
     handleBack(event){
         this.setState({ back: true });
     }
+    handleStatus(e) {
+        this.setState({ status: e.target.value});
+      };
     avoid(event){
         
     }
     handleSearch(event){
+        this.state.items=[]
         var a =false;
         for (var i=0; i < this.lista.length; i++) {
             if(this.igualarFechas(this.lista[i].dueDate,this.state.dueDate) && this.lista[i].name===this.state.name  && this.lista[i].status===this.state.status){
@@ -162,7 +167,7 @@ class filtro extends React.Component {
                 const newItem = {
                     description: this.lista[i].description,
                     name: this.lista[i].name,
-                    email: this.lista[i].email,
+                    priority: this.lista[i].priority,
                     status: this.lista[i].status,
                     dueDate: this.lista[i].dueDate,
                     id: Date.now()

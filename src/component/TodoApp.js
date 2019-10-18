@@ -13,61 +13,106 @@ import SearchIcon from '@material-ui/icons/Search';
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 import { Redirect } from "react-router-dom";
+import InputAdornment from '@material-ui/core/InputAdornment';
+import MenuItem from '@material-ui/core/MenuItem';
+import uuid from 'react-uuid';
+import axios from 'axios';
+
 
 class TodoApp extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { items: [], description: '', name: '', email: '', status: '', filtrob: false,dueDate:  new Date() };
+    this.state = { items: [], description: '', priority: 0, status: '', filtrob: false, dueDate: new Date() };
     this.handleChange = this.handleChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
+    this.handleStatus=this.handleStatus.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleSearch= this.handleSearch.bind(this);
-    this.lista=[];
-    if(JSON.parse(localStorage.getItem("list"))!==null){
-      this.state.items=JSON.parse(localStorage.getItem("list"));
-      this.lista=JSON.parse(localStorage.getItem("list"));
-    }
-    
+    this.handleSearch = this.handleSearch.bind(this);
+  }
+  updateList() {
+    fetch('http://localhost:8080/Task')
+      .then(response => response.json())
+      .then(data => {
+        let tasksList = [];
+        data.forEach(function (task) {
+          tasksList.push({
+            id: task.id,
+            description: task.description,
+            status: task.state,
+            priority: task.priority,
+            dueDate: task.dueDate,
+            propietario: task.propietario
+          })
+
+        });
+        this.setState({ items: tasksList });
+      });
+  }
+  getId(){
+    //alert(fetch('http://localhost:8080/CUser/'+localStorage.getItem("mailLogged")));    
+    fetch('http://localhost:8080/CUser/dd@hotmail.com')
+    .then(response => response.json())
+    .then(data => {
+      alert(data)
+    } );
+  }   
+  
+
+  componentDidMount() {
+    this.updateList();
   }
 
   checkdata(items) {
     this.lista.push(items);
     localStorage.setItem("list", JSON.stringify(this.lista));
   }
-  handleSearch(event){
+  handleSearch(event) {
     this.setState({ filtrob: true });
   }
 
   render() {
+    
+    const estados = [
+      {
+        value: 'In review',
+        label: 'In review',
+      },
+      {
+        value: 'In progress',
+        label: 'In progress',
+      },
+      {
+        value: 'Terminated',
+        label: 'Terminated',
+      },
+    ];
+
     const useStyles = makeStyles(theme => ({
       root: {
-          background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-        },
+        background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+      },
       fab: {
-          position: 'absolute',
-          bottom: theme.spacing(2),
-          left: theme.spacing(-5),
-        },
-        fab1: {
-          position: 'absolute',
-          bottom: theme.spacing(2),
-          right: theme.spacing(5),
-        },
-  }));
-      if (this.state.filtrob) {
+        position: 'absolute',
+        bottom: theme.spacing(2),
+        left: theme.spacing(-5),
+      },
+      fab1: {
+        position: 'absolute',
+        bottom: theme.spacing(2),
+        right: theme.spacing(5),
+      },
+
+    }));
+    if (this.state.filtrob) {
       return <Redirect to={{
         pathname: '/filtro'
-      }}    />
+      }} />
     };
-      return (
-        <div>
-          <h2>Lista de tarjetas</h2> 
-              
-          <TodoList items={this.state.items} />        
-          
-          <Card > 
-          <h2>Datos para nueva tarjeta</h2>      
+    return (
+      <div>    
+        <Card >
+          <h2>Datos para nueva tarjeta</h2>
           <form onSubmit={this.handleSubmit}>
             <TextField
               type="text"
@@ -78,31 +123,33 @@ class TodoApp extends React.Component {
               margin="normal"
             />
             <TextField
-              type="text"
-              label="name"
-              id="name"
-              value={this.state.name}
+              type="number"
+              label="priority"
+              id="priority"
+              value={this.state.priority}
               onChange={this.handleChange}
               margin="normal"
             />
             <TextField
-              type="text"
-              label="mail"
-              id="mail"
-              value={this.state.email}
-              onChange={this.handleChange}
-              margin="normal"
-            />
-            <TextField
-              type="text"
-              label="status"
+              select
               id="status"
-              value={this.state.status}
-              onChange={this.handleChange}
+              label="Status"
+              value= {this.state.status}
+              onChange={this.handleStatus}
               margin="normal"
-            />
+              InputProps={{
+                startAdornment: <InputAdornment position="start">Status</InputAdornment>,
+              }}
+            >
+              {estados.map(option => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
-  
+
               <KeyboardDatePicker
                 margin="normal"
                 id="date"
@@ -117,54 +164,62 @@ class TodoApp extends React.Component {
               />
             </MuiPickersUtilsProvider>
             <Container>
-            <Fab tooltip="Fitrar Notas" color="primary" aria-label="add" onClick={this.handleSearch} className={useStyles.fab1}>
-                              <SearchIcon />
-                </Fab> 
+              <Fab tooltip="Fitrar Notas" color="primary" aria-label="add" onClick={this.handleSearch} className={useStyles.fab1}>
+                <SearchIcon />
+              </Fab>
               <Button
                 label="status"
                 tooltip="add Card"
                 styles={{ backgroundColor: darkColors.blue, color: darkColors.white }}
                 onClick={this.state.items.length + 1}>
-                  <font size="8">+</font>
-                </Button>                
+                <font size="8">+</font>
+              </Button>
             </Container>
           </form>
         </Card >
-        </div>
-  
+        <h2>Lista de tarjetas</h2>
+        <TodoList items={this.state.items} />
+      </div>
+
     );
-  
-    
-        
+
+
+
   }
- 
+
 
   handleChange(e) {
     this.setState({ description: document.getElementById('description').value })
-    this.setState({ name: document.getElementById('name').value });;
-    this.setState({ email: document.getElementById('mail').value });;
-    this.setState({ status: document.getElementById('status').value });
+    this.setState({ priority: document.getElementById('priority').value });;
   }
+
 
   handleDate(e) {
     this.setState({ dueDate: e });
   }
 
+  handleStatus(e) {
+    this.setState({ status: e.target.value});
+  };
+
   handleSubmit(e) {
     e.preventDefault();
     const newItem = {
       description: this.state.description,
-      name: this.state.name,
-      email: this.state.email,
-      status: this.state.status,
+      priority: this.state.priority,
       dueDate: this.state.dueDate,
-      id: Date.now()
-    };    
-    this.setState(prevState => ({
+      state: this.state.status,
+      id: uuid(),
+      propietario: {id:2,name:localStorage.getItem("nameLogged"), email:localStorage.getItem("mailLogged"), },
+    };
+    axios.post('http://localhost:8080/Task',newItem).then(res=>{
+    this.updateList();
+    });
+    /**this.setState(prevState => ({
       items: prevState.items.concat(newItem),
       text: ''
     }));
-    this.checkdata(newItem);    
+    this.checkdata(newItem);*/
   }
 }
 export default TodoApp;
