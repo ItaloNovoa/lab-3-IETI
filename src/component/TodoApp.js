@@ -31,7 +31,7 @@ class TodoApp extends React.Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
   updateList() {
-    fetch('http://localhost:8080/Task')
+    fetch('http://localhost:8080/api/Task')
       .then(response => response.json())
       .then(data => {
         let tasksList = [];
@@ -50,8 +50,8 @@ class TodoApp extends React.Component {
       });
   }
   getId(){
-    //alert(fetch('http://localhost:8080/CUser/'+localStorage.getItem("mailLogged")));    
-    fetch('http://localhost:8080/CUser/dd@hotmail.com')
+    //alert(fetch('http://localhost:8080/api/CUser/'+localStorage.getItem("mailLogged")));    
+    fetch('http://localhost:8080/api/CUser/dd@hotmail.com')
     .then(response => response.json())
     .then(data => {
       alert(data)
@@ -210,16 +210,11 @@ class TodoApp extends React.Component {
       dueDate: this.state.dueDate,
       state: this.state.status,
       id: uuid(),
-      propietario: {id:2,name:localStorage.getItem("nameLogged"), email:localStorage.getItem("mailLogged"), },
+      propietario: {id:2,name:"Falta", email:localStorage.getItem("mailLogged"), },
     };
-    axios.post('http://localhost:8080/Task',newItem).then(res=>{
+    axios.post('http://localhost:8080/api/Task',newItem).then(res=>{
     this.updateList();
     });
-    /**this.setState(prevState => ({
-      items: prevState.items.concat(newItem),
-      text: ''
-    }));
-    this.checkdata(newItem);*/
   }
 }
 export default TodoApp;

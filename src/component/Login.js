@@ -9,39 +9,44 @@ import Typography from '@material-ui/core/Typography';
 import './Login.css'
 import { Redirect } from "react-router-dom";
 import image1 from "./imagenes/1.png"
+import axios from 'axios';
 
 export class Login extends React.Component{
-    checkdata() {
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value
-
-        if (email !== "" && password !== "" ) {
-            localStorage.setItem("isLoggedin", true);
-            localStorage.setItem("mailLogged", email);
-            localStorage.setItem("passwordLogged", password);
-            this.setState({ Loggin: true });
-        }
-    }
+    
     constructor(props) {
-
         super(props);
-        this.state = { createAcount: '', Loggin: '' }
+        this.state = { createAcount: '', Loggin: '', funciona:false }
         this.handleLoggin = this.handleLoggin.bind(this);
         this.handleCreateAcount = this.handleCreateAcount.bind(this);
     }
     handleLoggin(event) {
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value
-        if (email !=="" && password!=="" && localStorage.getItem("mailLogged")===email && localStorage.getItem("passwordLogged")===password){
-            this.checkdata();
-            this.setState({ Loggin: true });
-        }else if(email ==="" && password===""){
-            alert("El campo de email o contraseña esta vacio");
-        }else{
-            alert("usuario o correo incorrecto")
-        }
-        
+        const email1 = document.getElementById("email").value;
+        const password1 = document.getElementById("password").value;              
+        axios.post('http://localhost:8080/api/login', {
+            email: email1,
+            password: password1,
+        })
+            .then(function (response) {
+                console.log(response.data);
+                localStorage.setItem("Token", response.data.accessToken);
+                localStorage.setItem("isLoggedin", true);
+                localStorage.setItem("mailLogged", email1);     
+            })
+            .catch(function (error) {
+                console.log(error);
+                if(email1 ==="" && password1===""){
+                    alert("El campo de email o contraseña esta vacio");
+                }else{
+                    alert("usuario o correo incorrecto")
+                }
+            })
+        this.axios = axios.create({
+            baseURL: 'http://localhost:8080/api/',
+            timeout: 1000,
+            headers: {'Authorization': 'Bearer '+localStorage.getItem("Token")}
+        });                
     }
+    
     handleCreateAcount(event) {
         this.setState({ createAcount: true });
     }

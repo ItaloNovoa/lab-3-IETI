@@ -27,9 +27,30 @@ class filtro extends React.Component {
         this.handleBack = this.handleBack.bind(this);        
         this.handleSearch= this.handleSearch.bind(this);
         this.avoid=this.avoid.bind(this);
-        this.lista=JSON.parse(localStorage.getItem("list"));
-           
+        this.lista=[];           
     }
+    updateList() {
+        fetch('http://localhost:8080/api/Task')
+          .then(response => response.json())
+          .then(data => {
+            let tasksList = [];
+            data.forEach(function (task) {
+              tasksList.push({
+                id: task.id,
+                description: task.description,
+                status: task.state,
+                priority: task.priority,
+                dueDate: task.dueDate,
+                propietario: task.propietario
+              })
+    
+            });
+            this.lista= tasksList ;
+          });
+      }
+      componentDidMount() {
+        this.updateList();
+      }
     
 
     render() {
@@ -162,7 +183,7 @@ class filtro extends React.Component {
         this.state.items=[]
         var a =false;
         for (var i=0; i < this.lista.length; i++) {
-            if(this.igualarFechas(this.lista[i].dueDate,this.state.dueDate) && this.lista[i].name===this.state.name  && this.lista[i].status===this.state.status){
+            if(this.igualarFechas(this.lista[i].dueDate,this.state.dueDate) && this.lista[i].propietario.name===this.state.name  && this.lista[i].status===this.state.status){
                 a=true;
                 const newItem = {
                     description: this.lista[i].description,
