@@ -210,7 +210,7 @@ class TodoApp extends React.Component {
       dueDate: this.state.dueDate,
       state: this.state.status,
       id: uuid(),
-      propietario: {id:2,name:"Falta", email:localStorage.getItem("mailLogged"), },
+      propietario: {id:2,name:localStorage.getItem("nameLogged"), email:localStorage.getItem("mailLogged"), },
     };
     axios.post('http://localhost:8080/api/Task',newItem).then(res=>{
     this.updateList();
