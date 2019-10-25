@@ -21,19 +21,20 @@ export class Login extends React.Component{
     }
     handleLoggin(event) {
         const email1 = document.getElementById("email").value;
-        const password1 = document.getElementById("password").value;              
-        axios.post('http://localhost:8080/api/login', {
-            email: email1,
-            password: password1,
-        })
+        const password1 = document.getElementById("password").value;
+        const newItem = {
+            email : email1,
+            password : password1
+        }
+        axios.post('http://localhost:8080/api/login', newItem)
             .then(function (response) {
-                console.log(response.data);
-                localStorage.setItem("Token", response.data.accessToken);
+                alert(response);
+                //localStorage.setItem("Token", response.data.accessToken);
                 localStorage.setItem("isLoggedin", true);
                 localStorage.setItem("mailLogged", email1);     
             })
             .catch(function (error) {
-                console.log(error);
+                alert(error);
                 if(email1 ==="" && password1===""){
                     alert("El campo de email o contraseña esta vacio");
                 }else{
