@@ -11,7 +11,7 @@ import RightIcon from '@material-ui/icons/KeyboardArrowRight';
 import LeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container } from '@material-ui/core';
-
+import axios from 'axios';
 import Box from '@material-ui/core/Box';
 
 
@@ -19,16 +19,26 @@ export class edit extends Component {
     
     checkdata() {
         const email = document.getElementById("email").value;
-        const name = document.getElementById("name").value;
+        const name = document.getElementById("name").value+document.getElementById("last_name").value;
         const password = document.getElementById("password").value
-
+        alert("ENTRO")
         if (email !== "" && password !== "") {
-            localStorage.setItem("isLoggedin", true);
-            localStorage.setItem("nameLogged",name);
-            localStorage.setItem("mailLogged", email);
-            localStorage.setItem("passwordLogged", password);
-            this.setState({ Loggin: true });
-        }
+            fetch('https://taskplannerback.herokuapp.com/api/CUser/' + localStorage.getItem("mailLogged"))
+                .then(response => response.json())
+                .then(data => {
+                    const newitem={
+                        id: data.id,
+                        email:email,
+                        password: password,
+                        name: name
+                    }
+                    axios.put(`https://taskplannerback.herokuapp.com/api/UUser`, newitem).then(response => {
+                        localStorage.setItem("nameLogged",name);
+                        localStorage.setItem("mailLogged", email);
+                        localStorage.setItem("passwordLogged", password);
+                    });
+                });         
+        }        
     }
 
     constructor(props) {
@@ -36,7 +46,7 @@ export class edit extends Component {
         if (this.props.location.state) {
             this.state = {
                 first_name: this.props.location.state.first_name, last_name: this.props.location.state.last_name,
-                email: '', birthday: new Date('2014-08-18T21:11:54'), password: '', secondPassword: '', next: false, back: false,
+                email: '', birthday: new Date('2014-08-18T21:11:54'), password: '', secondPassword: '', next: false, back: false, 
             }
 
         } else {

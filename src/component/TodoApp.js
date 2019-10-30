@@ -31,7 +31,7 @@ class TodoApp extends React.Component {
     this.handleSearch = this.handleSearch.bind(this);
   }
   updateList() {
-    fetch('http://localhost:8080/api/Task')
+    fetch('https://taskplannerback.herokuapp.com/api/Task')
       .then(response => response.json())
       .then(data => {
         let tasksList = [];
@@ -49,18 +49,18 @@ class TodoApp extends React.Component {
         this.setState({ items: tasksList });
       });
   }
-  getId(){
-    //alert(fetch('http://localhost:8080/api/CUser/'+localStorage.getItem("mailLogged")));    
-    fetch('http://localhost:8080/api/CUser/dd@hotmail.com')
+  getId(){   
+    fetch('https://taskplannerback.herokuapp.com/api/CUser/'+localStorage.getItem("mailLogged"))
     .then(response => response.json())
     .then(data => {
-      alert(data)
+      localStorage.setItem("nameLogged",data.name)
     } );
   }   
   
 
   componentDidMount() {
     this.updateList();
+    this.getId();
   }
 
   checkdata(items) {
@@ -212,7 +212,7 @@ class TodoApp extends React.Component {
       id: uuid(),
       propietario: {id:2,name:localStorage.getItem("nameLogged"), email:localStorage.getItem("mailLogged"), },
     };
-    axios.post('http://localhost:8080/api/Task',newItem).then(res=>{
+    axios.post('https://taskplannerback.herokuapp.com/api/Task',newItem).then(res=>{
     this.updateList();
     });
   }

@@ -86,7 +86,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function logOut() {
-    localStorage.removeItem("isLoggedin");
+    //localStorage.removeItem("isLoggedin");
+    localStorage.clear();
     window.location.replace("/");
 }
 function edit() {    

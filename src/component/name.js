@@ -29,7 +29,7 @@ export class Name extends Component {
             email: email,
             password: password,
           };
-        axios.post('http://localhost:8080/api/User',newItem).then(res=>{
+        axios.post('https://taskplannerback.herokuapp.com/api/User',newItem).then(res=>{
             alert(JSON.stringify(newItem));
             if (email !== "" && password !== "") {            
                 localStorage.setItem("isLoggedin", true);

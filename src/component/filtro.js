@@ -30,7 +30,7 @@ class filtro extends React.Component {
         this.lista=[];           
     }
     updateList() {
-        fetch('http://localhost:8080/api/Task')
+        fetch('https://taskplannerback.herokuapp.com/api/Task')
           .then(response => response.json())
           .then(data => {
             let tasksList = [];
@@ -191,7 +191,7 @@ class filtro extends React.Component {
                     priority: this.lista[i].priority,
                     status: this.lista[i].status,
                     dueDate: this.lista[i].dueDate,
-                    id: Date.now()
+                    propietario: this.lista[i].propietario,
                   }; 
                 this.setState(prevState => ({
                     items: prevState.items.concat(newItem),
