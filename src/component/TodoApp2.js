@@ -18,7 +18,7 @@ export class TodoApp2 extends React.Component {
                         Descripcion= {this.props.res.description}
                     </Typography>
                     <Typography color="textSecondary" gutterBottom>
-                        Nombre= {this.props.res.propietario.name} {"                  -          ".replace(/ /g, "\u00a0")} pryority= {this.props.res.priority}
+                        Nombre= {this.props.res.propietario.name} {"                  -          ".replace(/ /g, "\u00a0")} priority= {this.props.res.priority}
                     </Typography>
                     <Typography color="textSecondary" gutterBottom>
                         Estado = {this.props.res.status}  {"           -          ".replace(/ /g, "\u00a0")}    DueDate = {this.props.res.dueDate.toString()}
