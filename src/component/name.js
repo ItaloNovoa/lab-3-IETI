@@ -11,7 +11,7 @@ import RightIcon from '@material-ui/icons/KeyboardArrowRight';
 import LeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container } from '@material-ui/core';
-
+import { Input } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import axios from 'axios';
 
@@ -46,11 +46,11 @@ export class Name extends Component {
         if (this.props.location.state) {
             this.state = {
                 first_name: this.props.location.state.first_name, last_name: this.props.location.state.last_name,
-                email: '', birthday: new Date('2014-08-18T21:11:54'), password: '', secondPassword: '', next: false, back: false,
+                email: '', birthday: new Date('2014-08-18T21:11:54'), password: '', secondPassword: '', next: false, back: false, file:null,
             }
 
         } else {
-            this.state = { first_name: '', last_name: '', email: '', birthday: new Date('2014-08-18T21:11:54'), password: '', secondPassword: '', next: false, back: false };
+            this.state = { first_name: '', last_name: '', email: '', birthday: new Date('2014-08-18T21:11:54'), password: '', secondPassword: '', next: false, back: false, file:null };
         }
 
         this.handleEmail = this.handleEmail.bind(this);
@@ -61,6 +61,7 @@ export class Name extends Component {
         this.handleLastName = this.handleLastName.bind(this);
         this.handleNext = this.handleNext.bind(this);
         this.handleBack = this.handleBack.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
     handleFirstName(event) {
         this.setState({ first_name: event.target.value });
@@ -96,6 +97,19 @@ export class Name extends Component {
     handleBack(event){
         event.preventDefault();
         this.setState({ back: true });
+    }
+    handleInputChange(e) {        
+        let data = new FormData();
+        data.append('file', e.target.files[0]);
+
+        axios.post('http://localhost:8080/api/files', data)
+            .then(function (response) {
+                console.log("file uploaded!", data);
+        })
+        .catch(function (error) {
+            console.log("failed file upload", error);
+        });       
+                
     }
     render() {
         const divStyle = {
@@ -139,7 +153,7 @@ export class Name extends Component {
                <div className='divStyle1'>
                     <form style={divStyle} >
                         <Container>
-
+                            <input type="file" id="file" onChange={this.handleInputChange}/>
                             
                         </Container>
                         <TextField
