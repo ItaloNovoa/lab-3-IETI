@@ -7,6 +7,7 @@ import {Name} from './component/name';
 import inicio2 from './component/inicio2';
 import {edit} from './component/edit';
 import filtro from './component/filtro';
+import Imagen from './component/Imagen';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/name" exact component={Name} />      
           <Route path="/edit" exact component={edit} />  
           <Route path="/filtro" exact component={filtro}/>
+          <Route path="/imagen" exact component={Imagen}/>
         </div>
       </Router>
   );

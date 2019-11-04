@@ -19,9 +19,8 @@ export class edit extends Component {
     
     checkdata() {
         const email = document.getElementById("email").value;
-        const name = document.getElementById("name").value+document.getElementById("last_name").value;
+        const name = document.getElementById("name").value+" "+document.getElementById("last_name").value;
         const password = document.getElementById("password").value
-        alert("ENTRO")
         if (email !== "" && password !== "") {
             fetch('https://taskplannerback.herokuapp.com/api/CUser/' + localStorage.getItem("mailLogged"))
                 .then(response => response.json())

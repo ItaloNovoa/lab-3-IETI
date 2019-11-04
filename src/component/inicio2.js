@@ -16,13 +16,118 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import image1 from "./imagenes/1.png"
 import TodoApp from './TodoApp';
 import Box from '@material-ui/core/Box';
 import EditIcon from '@material-ui/icons/Edit';
+import Imagen from './Imagen';
 
 const drawerWidth = 0;
 
+function logOut() {
+    localStorage.clear();
+    window.location.replace("/");
+}
+function edit() {    
+    window.location.replace("/edit");
+}
+export default function PersistentDrawerLeft(){
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+    const theme = useTheme();
+    
+
+    const [state, setState] = React.useState({
+        left: false, url: null,
+    });
+
+    const toggleDrawer = (side, open) => event => {
+        if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+        setOpen(open)
+        setState({ ...state, [side]: open });
+    };
+
+    const sideList = side => (
+        <div
+            className={classes.list}
+            role="presentation"
+        >
+            <div className={classes.drawerHeader}>
+                <IconButton onClick={toggleDrawer('left', false)}>
+                    {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                </IconButton>
+            </div>
+            <Divider />
+            <Divider />
+            <div>
+                <Box display="flex" justifyContent="center" m={1} p={1}>
+                    <Imagen/>
+                </Box>
+                <Box display="flex" justifyContent="center" >
+                    <ListItemText primary={localStorage.getItem('nameLogged')} />
+                    <IconButton display="flex" justifyContent="flex-end" onClick={edit}>
+                        {<EditIcon />}
+                    </IconButton>
+                </Box>
+                
+                   
+                
+
+            </div>
+            <Divider />
+            <List>
+                <ListItem button onClick={logOut}>
+                    <ListItemIcon>
+                        <InboxIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Log out" />
+                </ListItem>
+            </List>
+        </div>
+    );
+
+    return (
+        <div className={classes.root}>
+            <CssBaseline />
+            <AppBar
+                position="fixed"
+                className={clsx(classes.appBar, {
+                    [classes.appBarShift]: open,
+                })}
+            >
+                <Toolbar>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={toggleDrawer('left', true)}
+                        edge="start"
+                        className={clsx(classes.menuButton, open && classes.hide)}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <divider />
+                    <SwipeableDrawer
+                        open={state.left}
+                        onClose={toggleDrawer('left', false)}
+                        onOpen={toggleDrawer('left', true)}
+                    >
+                        {sideList('left')}
+                    </SwipeableDrawer>
+                    <divider />
+                    <Typography variant="h6" display="flex" justifyContent="center" noWrap>
+                        Task Planner
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+
+            <main className={classes.content}>
+                <div className={classes.toolbar} />
+                <TodoApp></TodoApp>
+            </main>
+        </div>
+    );
+}
 const useStyles = makeStyles(theme => ({
     list: {
         width: 200,
@@ -84,116 +189,3 @@ const useStyles = makeStyles(theme => ({
     },
 
 }));
-
-function logOut() {
-    //localStorage.removeItem("isLoggedin");
-    localStorage.clear();
-    window.location.replace("/");
-}
-function edit() {    
-    window.location.replace("/edit");
-}
-
-export default function PersistentDrawerLeft() {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
-    const theme = useTheme();
-    
-
-    const [state, setState] = React.useState({
-        left: false,
-    });
-
-    const toggleDrawer = (side, open) => event => {
-        if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-            return;
-        }
-        setOpen(open)
-        setState({ ...state, [side]: open });
-    };
-
-    
-
-    const sideList = side => (
-        <div
-            className={classes.list}
-            role="presentation"
-        >
-            <div className={classes.drawerHeader}>
-                <IconButton onClick={toggleDrawer('left', false)}>
-                    {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                </IconButton>
-            </div>
-            <Divider />
-            <Divider />
-            <div>
-                <Box display="flex" justifyContent="center" m={1} p={1}>
-                    <img src={image1} width='50%' height='auto' />
-                </Box>
-                <Box display="flex" justifyContent="center" >
-                    <ListItemText primary={localStorage.getItem('nameLogged')} />
-                    <IconButton display="flex" justifyContent="flex-end" onClick={edit}>
-                        {<EditIcon />}
-                    </IconButton>
-                </Box>
-                
-                   
-                
-
-            </div>
-            <Divider />
-            <List>
-                <ListItem button onClick={logOut}>
-                    <ListItemIcon>
-                        <InboxIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Log out" />
-                </ListItem>
-            </List>
-        </div>
-    );
-
-    const TodoApp1=<TodoApp/>
-    const TodoList=null;
-
-    return (
-        <div className={classes.root}>
-            <CssBaseline />
-            <AppBar
-                position="fixed"
-                className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
-                })}
-            >
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={toggleDrawer('left', true)}
-                        edge="start"
-                        className={clsx(classes.menuButton, open && classes.hide)}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <divider />
-                    <SwipeableDrawer
-                        open={state.left}
-                        onClose={toggleDrawer('left', false)}
-                        onOpen={toggleDrawer('left', true)}
-                    >
-                        {sideList('left')}
-                    </SwipeableDrawer>
-                    <divider />
-                    <Typography variant="h6" display="flex" justifyContent="center" noWrap>
-                        Task Planner
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-
-            <main className={classes.content}>
-                <div className={classes.toolbar} />
-                <TodoApp></TodoApp>
-            </main>
-        </div>
-    );
-}

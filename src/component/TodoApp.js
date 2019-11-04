@@ -49,12 +49,11 @@ class TodoApp extends React.Component {
         this.setState({ items: tasksList });
       });
   }
-  getId(){   
-    fetch('https://taskplannerback.herokuapp.com/api/CUser/'+localStorage.getItem("mailLogged"))
-    .then(response => response.json())
-    .then(data => {
-      localStorage.setItem("nameLogged",data.name)
-    } );
+  getId(){
+    axios.get('https://taskplannerback.herokuapp.com/api/CUser/'+localStorage.getItem("mailLogged"))
+      .then(res => {
+        localStorage.setItem("nameLogged",res.data.name);
+      })
   }   
   
 

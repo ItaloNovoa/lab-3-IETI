@@ -29,15 +29,24 @@ export class Name extends Component {
             email: email,
             password: password,
           };
+        let data = new FormData();
+        data.append('file', this.state.file);
+        axios.post('https://taskplannerback.herokuapp.com/api/files/'+email, data)
+            .then(function (response) {
+                console.log("file uploaded!", data);
+        })
+        .catch(function (error) {
+            console.log("failed file upload", error);
+        }); 
         axios.post('https://taskplannerback.herokuapp.com/api/User',newItem).then(res=>{
-            alert(JSON.stringify(newItem));
             if (email !== "" && password !== "") {            
                 localStorage.setItem("isLoggedin", true);
                 localStorage.setItem("nameLogged",name+" "+lastName);
                 localStorage.setItem("mailLogged", email);
                 this.setState({ Loggin: true });            
             }
-        }); 
+        });
+         
         
     }
 
@@ -94,21 +103,16 @@ export class Name extends Component {
             alert("La claves no son iguales")
         }
     }
+    
     handleBack(event){
         event.preventDefault();
         this.setState({ back: true });
     }
-    handleInputChange(e) {        
-        let data = new FormData();
-        data.append('file', e.target.files[0]);
-
-        axios.post('http://localhost:8080/api/files', data)
-            .then(function (response) {
-                console.log("file uploaded!", data);
-        })
-        .catch(function (error) {
-            console.log("failed file upload", error);
-        });       
+    handleInputChange(e) {
+        
+          this.setState({
+                file: e.target.files[0]
+            });           
                 
     }
     render() {
