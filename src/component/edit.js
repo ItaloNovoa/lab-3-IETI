@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Container } from '@material-ui/core';
 import axios from 'axios';
 import Box from '@material-ui/core/Box';
-
+import Input from '@material-ui/core/Input';
 
 export class edit extends Component {
     
@@ -32,24 +32,35 @@ export class edit extends Component {
                         name: name
                     }
                     axios.put(`https://taskplannerback.herokuapp.com/api/UUser`, newitem).then(response => {
-                        localStorage.setItem("nameLogged",name);
-                        localStorage.setItem("mailLogged", email);
-                        localStorage.setItem("passwordLogged", password);
+                    localStorage.setItem("nameLogged",name);
+                    localStorage.setItem("mailLogged", email);
+                    localStorage.setItem("passwordLogged", password);
                     });
                 });         
         }        
-    }
+        let data1 = new FormData();
+        data1.append('file', this.state.file);
+        axios.put('https://taskplannerback.herokuapp.com/api//files/' + email, data1)
+            .then(function (response) {
+                console.log("file uploaded!", data1);
+                alert("Funciona")
+            })
+            .catch(function (error) {
+                console.log("failed file upload", error);
+                alert("No Funciona")
+            })
+        }
 
     constructor(props) {
         super(props);
         if (this.props.location.state) {
             this.state = {
                 first_name: this.props.location.state.first_name, last_name: this.props.location.state.last_name,
-                email: '', birthday: new Date('2014-08-18T21:11:54'), password: '', secondPassword: '', next: false, back: false, 
+                email: '', birthday: new Date('2014-08-18T21:11:54'), password: '', secondPassword: '', next: false, back: false, file: null,
             }
 
         } else {
-            this.state = { first_name: '', last_name: '', email: '', birthday: new Date('2014-08-18T21:11:54'), password: '', secondPassword: '', next: false, back: false };
+            this.state = { first_name: '', last_name: '', email: '', birthday: new Date('2014-08-18T21:11:54'), password: '', secondPassword: '', next: false, back: false, file: null };
         }
 
         this.handleEmail = this.handleEmail.bind(this);
@@ -60,6 +71,7 @@ export class edit extends Component {
         this.handleLastName = this.handleLastName.bind(this);
         this.handleNext = this.handleNext.bind(this);
         this.handleBack = this.handleBack.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
     handleFirstName(event) {
         this.setState({ first_name: event.target.value });
@@ -78,7 +90,12 @@ export class edit extends Component {
     };
     handleSecondPassword(event) {
         this.setState({ secondPassword: event.target.value });
-    };
+    };    
+    handleInputChange(e) {        
+        this.setState({
+              file: e.target.files[0]
+          });             
+    }
     handleNext(event) {
         event.preventDefault();
         if (this.state.first_name && this.state.last_name && this.state.password && this.state.password === this.state.secondPassword) {
@@ -96,6 +113,7 @@ export class edit extends Component {
         event.preventDefault();
         this.setState({ back: true });
     }
+
     render() {
         const divStyle = {
             display: 'flex',
@@ -139,8 +157,8 @@ export class edit extends Component {
                <div className='divStyle1'>
                     <form style={divStyle} >
                         <Container>
-
-                            
+                            <td font-size= "50px" >Imagen de perfil </td>
+                            <Input type="file" id="file" onChange={this.handleInputChange}/>
                         </Container>
                         <TextField
                             type="text"

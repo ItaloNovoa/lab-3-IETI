@@ -20,6 +20,7 @@ import TodoApp from './TodoApp';
 import Box from '@material-ui/core/Box';
 import EditIcon from '@material-ui/icons/Edit';
 import Imagen from './Imagen';
+import axios from 'axios';
 
 const drawerWidth = 0;
 
@@ -30,6 +31,7 @@ function logOut() {
 function edit() {    
     window.location.replace("/edit");
 }
+
 export default function PersistentDrawerLeft(){
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);

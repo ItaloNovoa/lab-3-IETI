@@ -28,14 +28,16 @@ export class Name extends Component {
             name: name+" "+lastName,
             email: email,
             password: password,
-          };
+        };
         let data = new FormData();
         data.append('file', this.state.file);
         axios.post('https://taskplannerback.herokuapp.com/api/files/'+email, data)
             .then(function (response) {
                 console.log("file uploaded!", data);
+                alert("funciona")
         })
         .catch(function (error) {
+            alert("errror")
             console.log("failed file upload", error);
         }); 
         axios.post('https://taskplannerback.herokuapp.com/api/User',newItem).then(res=>{
@@ -108,13 +110,12 @@ export class Name extends Component {
         event.preventDefault();
         this.setState({ back: true });
     }
-    handleInputChange(e) {
-        
+    handleInputChange(e) {        
           this.setState({
                 file: e.target.files[0]
-            });           
-                
+            });             
     }
+
     render() {
         const divStyle = {
             display: 'flex',
@@ -157,8 +158,8 @@ export class Name extends Component {
                <div className='divStyle1'>
                     <form style={divStyle} >
                         <Container>
+                        <td font-size= "50px" >Imagen de perfil </td>
                             <input type="file" id="file" onChange={this.handleInputChange}/>
-                            
                         </Container>
                         <TextField
                             type="text"
