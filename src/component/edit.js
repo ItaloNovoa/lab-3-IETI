@@ -43,11 +43,9 @@ export class edit extends Component {
         axios.put('https://taskplannerback.herokuapp.com/api//files/' + email, data1)
             .then(function (response) {
                 console.log("file uploaded!", data1);
-                alert("Funciona")
             })
             .catch(function (error) {
                 console.log("failed file upload", error);
-                alert("No Funciona")
             })
         }
 

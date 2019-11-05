@@ -34,10 +34,8 @@ export class Name extends Component {
         axios.post('https://taskplannerback.herokuapp.com/api/files/'+email, data)
             .then(function (response) {
                 console.log("file uploaded!", data);
-                alert("funciona")
         })
         .catch(function (error) {
-            alert("errror")
             console.log("failed file upload", error);
         }); 
         axios.post('https://taskplannerback.herokuapp.com/api/User',newItem).then(res=>{
